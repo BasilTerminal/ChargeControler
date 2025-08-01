@@ -31,7 +31,7 @@ void setup() {
 void loop() {
   UpdateIndicationByInnerState();
   (*STATE)();
-  delay(200);
+  delay(1200);
 }
 
 // Стани автомата

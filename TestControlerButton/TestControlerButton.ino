@@ -17,7 +17,7 @@ void setup() {
     digitalWrite(ConnectedBatteryPins[i], LOW);
     pinMode(BatteryChargedIndicatorPins[i], OUTPUT);
     digitalWrite(BatteryChargedIndicatorPins[i], LOW);
-    epsilon = Curent();
+    epsilon = CurrentOfCharging();
   }
 }
 
@@ -49,12 +49,13 @@ void loop() {
 
 
   Serial.print(" I_sens= ");
-  Serial.println(Curent());
+  Serial.println(CurrentOfCharging());
   delay(1000);
 }
 
 
-int Curent() {  // return curent of battery in mA
+int16_t CurrentOfCharging() {
+  int tok;
   long sum = 0;
   float average;
   for (int i = 0; i < 1000; i++) {
@@ -62,7 +63,9 @@ int Curent() {  // return curent of battery in mA
   }
   average = (float)sum / 1000.0;
   //Serial.print(average);
-  return int(((average - 512.0) * 48.2))-epsilon;
+  tok = int(((average - 512.0) * 48.2)) - epsilon;
+  //Serial.println(tok);
+  return tok;
 }
 
 void SelectCh(byte chn) {  // 0 викл все,  1...5 вкл
